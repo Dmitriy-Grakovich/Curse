@@ -1,0 +1,33 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="16dp"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/money_charcode"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/money_charCode_label"/>
+
+    <TextView
+        android:id="@+id/money_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/money_name_label"/>
+    <TextView
+        android:id="@+id/money_nominal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/money_nominal_label"/>
+    <TextView
+        android:id="@+id/money_value"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/money_value_label"/>
+    <TextView
+        android:id="@+id/money_previous"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/money_previous_label"/>
+</LinearLayout>

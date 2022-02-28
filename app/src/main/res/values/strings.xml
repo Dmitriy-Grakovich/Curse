@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">CurseCB</string>
+    <string name="money_charCode_label">CharCode</string>
+    <string name="money_nominal_label">Nominal</string>
+    <string name="money_name_label">Name</string>
+    <string name="money_value_label">Value</string>
+    <string name="money_previous_label">Previous</string>
+
+</resources>
