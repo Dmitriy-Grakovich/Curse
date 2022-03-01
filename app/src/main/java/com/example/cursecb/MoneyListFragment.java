@@ -30,6 +30,7 @@ import java.util.Set;
 public class MoneyListFragment extends Fragment {
     private RecyclerView mCrimeRecyclerView;
     private MoneyAdapter mAdapter;
+    //адрес подключения к ресерсу ЦБ
     private static final String URL_CB= "https://www.cbr-xml-daily.ru/daily_json.js";
     public static URL mURL;
     private ConnectURLCB mConnectURLCB;
@@ -62,7 +63,7 @@ public class MoneyListFragment extends Fragment {
         updateUI();
     }
 
-
+//возвращение заполненного списка, запуск второго потока для заполнения списка.
     private void updateUI() {
         MoneyLab moneyLab = MoneyLab.get(getActivity());
         monies= moneyLab.getMonies();
@@ -70,7 +71,7 @@ public class MoneyListFragment extends Fragment {
         mConnectURLCB.execute(mURL);
 
     }
-
+//отображение строк в списке класса, ViewHolder удерживает объект View
     private class MoneyHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         private TextView mNameTextView;
@@ -79,6 +80,7 @@ public class MoneyListFragment extends Fragment {
 
         public MoneyHolder(LayoutInflater inflater, ViewGroup parent) {
             super(inflater.inflate(R.layout.list_item_money, parent, false));
+            //назначаем слушателя
             itemView.setOnClickListener(this);
             mNameTextView = (TextView) itemView.findViewById(R.id.money_name);
             mValueTextView = (TextView) itemView.findViewById(R.id.money_value);
@@ -89,14 +91,15 @@ public class MoneyListFragment extends Fragment {
             mNameTextView.setText(mMoney.getName());
             mValueTextView.setText(mMoney.getValue().toString());
         }
-
+//запуск активности Money
         @Override
         public void onClick(View view) {
             Intent intent = CurseActivity.newIntent(getActivity(), mMoney.getId());
             startActivity(intent);
         }
     }
-
+// Адаптер получает данные модели для указанной позиции и связывает их с представлением View объекта
+//ViewHolder
     private class MoneyAdapter extends RecyclerView.Adapter<MoneyHolder> {
         private List<Money> mMonies;
         public MoneyAdapter(List<Money> monies) {
@@ -121,6 +124,8 @@ public class MoneyListFragment extends Fragment {
             return mMonies.size();
         }
     }
+
+    //Второй паток для заполнения списка со стороннего ресурса.
     private class ConnectURLCB extends AsyncTask<URL,Void,String> {
 
 
@@ -138,7 +143,7 @@ public class MoneyListFragment extends Fragment {
         }
 
 
-
+        //подключение к ресурсу, вывод содержания ресурса в строковое значение
         private  String getResponseFromURL(URL url) throws IOException{
 
             HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
@@ -159,14 +164,17 @@ public class MoneyListFragment extends Fragment {
 
         @Override
         protected void onPostExecute(String s) {
-
+            if(monies.size()!=0){
+                monies.clear();
+            }
+            // Парсинг json, заполнения списка валют
             JSONObject jsonObject = null;
             try {
                 jsonObject = new JSONObject(s);
 
             JSONObject jsonValute = jsonObject.getJSONObject("Valute");
                 Iterator<String> iterator = jsonValute.keys();
-           // Set<String> keySet = jsonValute.keys();
+
             while (iterator.hasNext()) {
                 JSONObject jsonMoney = jsonValute.getJSONObject(iterator.next());
                 Money money1 = new Money();
@@ -183,6 +191,7 @@ public class MoneyListFragment extends Fragment {
                 e.printStackTrace();
             }
 
+            //вызов отображения списка
             if(mAdapter==null){
                 mAdapter = new MoneyAdapter(monies);
                 mCrimeRecyclerView.setAdapter(mAdapter);}

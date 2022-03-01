@@ -44,11 +44,11 @@ public class MoneyFragment extends Fragment {
         mNominalTextView = (TextView) v.findViewById(R.id.money_nominal);
         mCharCodeTextView = (TextView) v.findViewById(R.id.money_charcode);
         mPreviousTextView = (TextView) v.findViewById(R.id.money_previous);
-        mNominalTextView.setText(mMoney.getNominal().toString());
+        mNominalTextView.setText("Nominal : " + mMoney.getNominal().toString());
         mNameTextView.setText(mMoney.getName());
         mCharCodeTextView.setText(mMoney.getCharCode());
-        mPreviousTextView.setText(mMoney.getPrevious().toString());
-        mValueTextView.setText(mMoney.getValue().toString());
+        mPreviousTextView.setText("Предыдущий курс : "+ mMoney.getPrevious().toString());
+        mValueTextView.setText("Текущий Курс : " + mMoney.getValue().toString());
         return v;
     }
 

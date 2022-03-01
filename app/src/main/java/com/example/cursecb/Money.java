@@ -1,6 +1,22 @@
 package com.example.cursecb;
+
+import java.util.Objects;
+
 //Создадим класс валюта
 public class Money {
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Money money = (Money) o;
+        return id.equals(money.id) && mNumCode.equals(money.mNumCode) && mCharCode.equals(money.mCharCode) && mNominal.equals(money.mNominal) && mName.equals(money.mName) && mValue.equals(money.mValue) && mPrevious.equals(money.mPrevious);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, mNumCode, mCharCode, mNominal, mName, mValue, mPrevious);
+    }
+
     private String id;
     private Integer mNumCode;
     private String mCharCode;
